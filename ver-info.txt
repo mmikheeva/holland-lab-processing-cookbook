@@ -1,0 +1,13 @@
+26-Jan-2026
+
+Initial release.
+
+27-Mar-2026
+
+Cookbook-stats-instructions.csv
+- Updated search patterns for mapping report to correctly extract PE stats.
+
+15-Apr-2026
+
+Cookbook-generate.sh
+- Added check for existing samples in quality control step. If sample exists, the step is skipped.
