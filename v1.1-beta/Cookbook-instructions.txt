@@ -1,0 +1,151 @@
+ 
+============================================================
+
+=== PROCESSING INSTRUCTIONS ===
+
+============================================================
+
+INPUT_PATH=/scratch/prj/mmg_scmethbank/GSE121708/batch01/rna_se/trim
+OUTPUT_PATH=/scratch/prj/mmg_scmethbank/GSE121708/batch01/rna_se
+
+
+
+== QUALITY CONTROL ==
+============================================================
+
+> Select one of the tools and assign to variable below: <FastQC>.
+> Select <Skip> if you wish to skip this step.
+
+	TOOL=Skip
+
+> FastQC parameters.
+> For extra parameters, please, type <fastqc --help> and specify below
+	--threads 10 # number of files to process simultanuously (250Mb allocated to each)
+	--quiet
+
+
+
+== TRIMMING ==
+============================================================
+
+> Select one of the tools and assign to variable below: <TrimGalore>. 
+> Select <Skip> if you wish to skip this step. 
+
+	TOOL=Skip
+
+> TrimGalore parameters.
+> For extra parameters, please, type <trim_galore --help> and specify below
+	--paired
+	--gzip
+	--cores 4 # '--cores 4' is a sweet spot, anything above has diminishing returns
+	#--clip_R1 5
+	#--clip_R2 3
+	#--rrbs
+
+
+
+== ALIGNMENT INDEX ==
+============================================================
+
+> Select one of the tools and assign to variable below: <Bismark>, <STAR>
+> Select <Skip> if you wish to skip this step.
+
+	TOOL=STAR
+
+> Bismark parameters (BS-Seq only)
+> For extra parameters, please, type <bismark_genome_preparation --help> and specify below
+	--genome_fa /scratch/users/k2367543/reference-rdna/Mouse/GRCm38.p0/GRCm38.masked.rDNA.looped.fasta # argument is not listed in the tool documentation and introduced to build a script
+	--parallel 10 # indexing is run twice, so '--parallel 4' will use 8 threads in total
+
+> STAR parameters (RNA-Seq only)
+> For extra parameters, please, type <STAR --help> and specify below
+	--genomeFastaFiles /scratch/users/k2367543/reference-rdna/Mouse/GRCm38.p0/GRCm38.masked.rDNA.looped.fasta
+	--sjdbGTFfile /scratch/users/k2367543/reference-rdna/Mouse/GRCm38.p0/BK000964.3.looped_3008.gencode.v25.mod.gtf # gtf file should be unzipped
+	--runThreadN 10
+	--sjdbOverhang 75 # read length minus 1
+
+
+
+== GENOME ALIGNMENT ==
+============================================================
+
+> Select one of the tools and assign to variable below: <Bismark>, <STAR>.
+> Select <Skip> if you wish to skip this step.
+
+	TOOL=STAR
+
+> Bismark parameters (BS-Seq only)
+> For extra parameters, please, type <bismark --help> and specify below
+	--genome /scratch/prj/mmg_scmethbank/GSE121708/bismark-idx # if Step 3.1 was not skipped, then write '${genome_idx}'
+	#-1 
+	#-2
+	--local
+	--parallel 10
+	--gzip
+	--non_directional
+
+> STAR parameters (RNA-Seq only)
+> For extra parameters, please, type <STAR --help> and specify below
+	--genomeDir ${genome_idx} # if Step 3.1 was not skipped, then write '${genome_idx}'
+	#--paired # argument is not listed in the tool documentation and introduced to build a script
+	--readFilesCommand zcat # if input fastq files were compressed
+	--runThreadN 10
+	--outSAMtype BAM SortedByCoordinate # required if further steps needed
+	--outBAMsortingThreadN 10
+	--quantMode GeneCounts 
+
+
+
+== DEDUPLICATION ==
+============================================================
+
+> Select one of the tools and assign to variable below: <Bismark>, <Picard>.
+> Select <Skip> if you wish to skip this step.
+
+	TOOL=Skip
+
+> Bismark parameters (BS-Seq only).
+> For extra parameters, please, type <deduplicate_bismark --help> and specify below
+	--threads 10 # coming from 'samtools sort', which has to be run prior to deduplication
+	--bam
+
+> Picard parameters
+> For extra parameters, please, type <picard MarkDuplicates --help> and specify below
+
+
+
+== READS PER REGION ==
+============================================================
+
+> Select one of the tools and assign to variable below: <Samtools>.
+> Select <Skip> if you wish to skip this step.
+	
+	TOOL=Samtools
+
+> Samtools parameters.
+> For extra parameters, please, type <samtools merge> and specify below
+	-R BK000964.3.looped_3008
+	--threads 10
+
+
+
+== METHYLATION EXTRACTION ==
+============================================================
+
+> Select one of the tools and assign to variable below: <Bismark>.
+> Select <Skip> if you wish to skip this step.
+	
+	TOOL=Skip
+
+> Bismark parameters (BS-Seq only).
+> For extra parameters, please, type <bismark_methylation_extractor --help> and specify below
+	--single-end
+	#--paired-end
+	--parallel 10
+	#--merge_non_CpG
+	--bedGraph
+
+
+
+== THE END OF INSTRUCTIONS ==
+============================================================

@@ -1,0 +1,37 @@
+﻿ProcessingStep,DataType,ProcessingTool,PathPattern,ReportPattern,ParameterPattern,ParameterFinal
+Trimming,NonSpecific,TrimGalore,trim,_trimming_report.txt,Total reads processed:,TrimmingInput
+Trimming,NonSpecific,TrimGalore,trim,_trimming_report.txt,Reads written (passing filters):,TrimmedReads
+Trimming,NonSpecific,TrimGalore,trim,_trimming_report.txt,Number of sequence pairs removed because at least one read was shorter than the length cutoff .*:,DiscardedTrimmedReads
+Mapping,RNASeq,STAR,map,.Log.final.out,Number of input reads |,MappingInput
+Mapping,RNASeq,STAR,map,.Log.final.out,Uniquely mapped reads number |,UniquelyMappedReads
+Mapping,RNASeq,STAR,map,.Log.final.out,Number of reads mapped to multiple loci |,MultiMappedReads
+Mapping,RNASeq,STAR,map,.Log.final.out,Number of reads mapped to too many loci |,MultiMappedReads
+Mapping,RNASeq,STAR,map,.Log.final.out,Number of reads unmapped: too many mismatches |,UnmappedReads
+Mapping,RNASeq,STAR,map,.Log.final.out,Number of reads unmapped: too short |,UnmappedReads
+Mapping,RNASeq,STAR,map,.Log.final.out,Number of reads unmapped: other |,UnmappedReads
+Mapping,RNASeq,STAR,map,.Log.final.out,Number of chimeric reads |,OtherDiscardedReads
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Sequence.* analysed in total:,MappingInput
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Number of .* alignments with a unique best hit.*:,UniquelyMappedReads
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Sequence.* with no alignments under any condition:,UnmappedReads
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Sequence.* did not map uniquely:,MultiMappedReads
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Sequence.* which were discarded because genomic sequence could not be extracted:,OtherDiscardedReads
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Total methylated C's in CpG context:,MethylatedCpG
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Total methylated C's in CHG context:,MethylatedNonCpG
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Total methylated C's in CHH context:,MethylatedNonCpG
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Total methylated C's in Unknown context:,MethylatedNonCpG
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Total unmethylated C's in CpG context:,UnmethylatedCpG
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Total unmethylated C's in CHG context:,UnmethylatedNonCpG
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Total unmethylated C's in CHH context:,UnmethylatedNonCpG
+Mapping,BSSeq,Bismark,map,_bismark_bt2_.*_report.txt,Total unmethylated C's in Unknown context:,UnmethylatedNonCpG
+Deduplication,BSSeq,Bismark,dedup,_bismark_bt2.deduplication_report.txt,Total number of alignments analysed in .*:,DeduplicationInput
+Deduplication,BSSeq,Bismark,dedup,_bismark_bt2.deduplication_report.txt,Total count of deduplicated leftover sequences:,DeduplicatedReads
+ReadsPerRegion,NonSpecific,Samtools,bam_.*,.reads-per-region-report.txt,Reads per region:,ReadsPerRegion
+Methylation,BSSeq,Bismark,methyl_.*,_splitting_report.txt,Total number of methylation call strings processed:,MethylationInput
+Methylation,BSSeq,Bismark,methyl_.*,_splitting_report.txt,Total methylated C's in CpG context:,MethylatedCpG
+Methylation,BSSeq,Bismark,methyl_.*,_splitting_report.txt,Total methylated C's in CHG context:,MethylatedNonCpG
+Methylation,BSSeq,Bismark,methyl_.*,_splitting_report.txt,Total methylated C's in CHH context:,MethylatedNonCpG
+Methylation,BSSeq,Bismark,methyl_.*,_splitting_report.txt,Total methylated C's in Unknown context:,MethylatedNonCpG
+Methylation,BSSeq,Bismark,methyl_.*,_splitting_report.txt,Total C to T conversions in CpG context:,UnmethylatedCpG
+Methylation,BSSeq,Bismark,methyl_.*,_splitting_report.txt,Total C to T conversions in CHG context:,UnmethylatedNonCpG
+Methylation,BSSeq,Bismark,methyl_.*,_splitting_report.txt,Total C to T conversions in CHH context:,UnmethylatedNonCpG
+Methylation,BSSeq,Bismark,methyl_.*,_splitting_report.txt,Total C to T conversions in Unknown context:,UnmethylatedNonCpG
